@@ -1,80 +1,80 @@
-
-
-religious_questions = [f"سؤال ديني {i+1}؟" for i in range(50)]
-religious_answers = [f"جواب ديني {i+1}" for i in range(50)]
-
-geography_questions = [f"سؤال جغرافيا {i+1}؟" for i in range(40)]
-geography_answers = [f"جواب جغرافيا {i+1}" for i in range(40)]
-
-general_questions = [f"سؤال عام {i+1}؟" for i in range(40)]
-general_answers = [f"جواب عام {i+1}" for i in range(40)]
-
-# بناء HTML
-html_content = """
 <!DOCTYPE html>
 <html lang="ar">
 <head>
 <meta charset="UTF-8">
 <title>مسابقة أسئلة وإجابات</title>
 <style>
-body { font-family: Arial, sans-serif; direction: rtl; text-align: right; margin: 20px; }
-h1, h2 { color: #2E86C1; text-align: center; }
-a { text-decoration: none; color: #FF5733; font-weight: bold; margin: 0 10px; }
-a:hover { text-decoration: underline; }
-.header { text-align: center; margin-bottom: 20px; }
+body { font-family: Arial, sans-serif; direction: rtl; text-align: right; margin: 0; background-color: #ff4d4d; }
+.header { text-align: center; margin: 20px 0; }
 .header img { width: 150px; }
-.header .credit { margin-top: 5px; font-size: 14px; }
-.section { margin-top: 50px; }
-ol { margin: 20px; }
+.header .credit { margin-top: 5px; font-size: 14px; color: white; }
+h1 { color: white; text-align: center; }
+.nav { display: flex; justify-content: center; margin-bottom: 30px; }
+.nav a { text-decoration: none; margin: 0 15px; text-align: center; color: white; font-weight: bold; }
+.nav a img { width: 60px; display: block; margin: 0 auto 5px; }
+.section { margin: 50px; background-color: white; padding: 20px; border-radius: 10px; }
 .answer { display: none; margin-top: 5px; color: green; }
 button.show-answer { margin-top: 5px; }
 </style>
 <script>
 function toggleAnswer(id) {
     var x = document.getElementById(id);
-    if (x.style.display === "none") { x.style.display = "block"; } 
-    else { x.style.display = "none"; }
+    if(x.style.display === "none"){ x.style.display="block"; } else{ x.style.display="none"; }
 }
 </script>
 </head>
 <body>
-
 <div class="header">
 <img src="https://upload.wikimedia.org/wikipedia/commons/a/ac/Question_mark_icon.png" alt="Logo">
 <div>⚡️</div>
 <div class="credit">من إعداد sułtan</div>
 </div>
-
 <h1>مسابقة أسئلة وإجابات</h1>
-
-<div style="text-align:center; margin-bottom:30px;">
-<a href="#religious">🕌 الأسئلة الدينية</a> |
-<a href="#geography">🌍 أسئلة جغرافيا ودول</a> |
-<a href="#general">🧠 أسئلة عامة</a>
+<div class="nav">
+<a href="#religious"><img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Mosque_icon.png" alt="ديني">🕌 ديني</a>
+<a href="#geography"><img src="https://upload.wikimedia.org/wikipedia/commons/8/8b/Globe_icon.png" alt="جغرافيا">🌍 جغرافيا</a>
+<a href="#general"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/Brain_icon.png" alt="عام">🧠 عام</a>
 </div>
 
 <div class="section" id="religious">
 <h2>🕌 الأسئلة الدينية</h2>
 <ol>
-"""
+<li>كم عدد أركان الإسلام?<br><button class="show-answer" onclick="toggleAnswer('r1')">أظهر الإجابة</button><div class="answer" id="r1">5</div></li>
+<li>كم عدد أركان الإيمان?<br><button class="show-answer" onclick="toggleAnswer('r2')">أظهر الإجابة</button><div class="answer" id="r2">6</div></li>
+<li>من هو أول نبي?<br><button class="show-answer" onclick="toggleAnswer('r3')">أظهر الإجابة</button><div class="answer" id="r3">آدم</div></li>
+<li>من هو خاتم الأنبياء?<br><button class="show-answer" onclick="toggleAnswer('r4')">أظهر الإجابة</button><div class="answer" id="r4">محمد ﷺ</div></li>
+<li>كم عدد الصلوات المفروضة في اليوم?<br><button class="show-answer" onclick="toggleAnswer('r5')">أظهر الإجابة</button><div class="answer" id="r5">5</div></li>
+<!-- أكمل باقي الأسئلة الدينية بنفس النمط -->
+</ol>
+</div>
 
-for i, (q, a) in enumerate(zip(religious_questions, religious_answers)):
-    html_content += f'<li>{q}<br><button class="show-answer" onclick="toggleAnswer(\'r{i}\')">أظهر الإجابة</button><div class="answer" id="r{i}">{a}</div></li>\n'
+<div class="section" id="geography">
+<h2>🌍 أسئلة جغرافيا ودول</h2>
+<ol>
+<li>ما عاصمة فرنسا?<br><button class="show-answer" onclick="toggleAnswer('g1')">أظهر الإجابة</button><div class="answer" id="g1">باريس</div></li>
+<li>ما عاصمة اليابان?<br><button class="show-answer" onclick="toggleAnswer('g2')">أظهر الإجابة</button><div class="answer" id="g2">طوكيو</div></li>
+<li>ما عاصمة إيطاليا?<br><button class="show-answer" onclick="toggleAnswer('g3')">أظهر الإجابة</button><div class="answer" id="g3">روما</div></li>
+<li>ما عاصمة مصر?<br><button class="show-answer" onclick="toggleAnswer('g4')">أظهر الإجابة</button><div class="answer" id="g4">القاهرة</div></li>
+<li>ما عاصمة تركيا?<br><button class="show-answer" onclick="toggleAnswer('g5')">أظهر الإجابة</button><div class="answer" id="g5">أنقرة</div></li>
+<!-- أكمل باقي أسئلة الجغرافيا بنفس النمط -->
+</ol>
+</div>
 
-html_content += "</ol></div>\n<div class='section' id='geography'><h2>🌍 أسئلة جغرافيا ودول</h2><ol>\n"
+<div class="section" id="general">
+<h2>🧠 أسئلة عامة</h2>
+<ol>
+<li>كم عدد أيام السنة?<br><button class="show-answer" onclick="toggleAnswer('gen1')">أظهر الإجابة</button><div class="answer" id="gen1">365</div></li>
+<li>كم عدد شهور السنة?<br><button class="show-answer" onclick="toggleAnswer('gen2')">أظهر الإجابة</button><div class="answer" id="gen2">12</div></li>
+<li>كم عدد قارات العالم?<br><button class="show-answer" onclick="toggleAnswer('gen3')">أظهر الإجابة</button><div class="answer" id="gen3">7</div></li>
+<li>كم عدد لاعبي فريق كرة القدم?<br><button class="show-answer" onclick="toggleAnswer('gen4')">أظهر الإجابة</button><div class="answer" id="gen4">11</div></li>
+<li>ما أسرع حيوان بري?<br><button class="show-answer" onclick="toggleAnswer('gen5')">أظهر الإجابة</button><div class="answer" id="gen5">الفهد</div></li>
+<!-- أكمل باقي الأسئلة العامة بنفس النمط -->
+</ol>
+</div>
 
-for i, (q, a) in enumerate(zip(geography_questions, geography_answers)):
-    html_content += f'<li>{q}<br><button class="show-answer" onclick="toggleAnswer(\'g{i}\')">أظهر الإجابة</button><div class="answer" id="g{i}">{a}</div></li>\n'
+<div style="text-align:center; margin-top:30px;">
+<a href="#top" style="color:white;">العودة للأعلى</a>
+</div>
 
-html_content += "</ol></div>\n<div class='section' id='general'><h2>🧠 أسئلة عامة</h2><ol>\n"
-
-for i, (q, a) in enumerate(zip(general_questions, general_answers)):
-    html_content += f'<li>{q}<br><button class="show-answer" onclick="toggleAnswer(\'gen{i}\')">أظهر الإجابة</button><div class="answer" id="gen{i}">{a}</div></li>\n'
-
-html_content += "</ol></div>\n<div style='text-align:center; margin-top:30px;'><a href='#top'>العودة للأعلى</a></div>\n</body></html>"
-
-file_path = "/mnt/data/مسابقة_130_سؤال.html"
-with open(file_path, "w", encoding="utf-8") as f:
-    f.write(html_content)
-
-file_path
+</body>
+</html>
