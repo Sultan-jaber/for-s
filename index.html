@@ -2,79 +2,148 @@
 <html lang="ar">
 <head>
 <meta charset="UTF-8">
-<title>مسابقة أسئلة وإجابات</title>
+<title>مسابقة تفاعلية 130 سؤال</title>
 <style>
-body { font-family: Arial, sans-serif; direction: rtl; text-align: right; margin: 0; background-color: #ff4d4d; }
-.header { text-align: center; margin: 20px 0; }
-.header img { width: 150px; }
-.header .credit { margin-top: 5px; font-size: 14px; color: white; }
-h1 { color: white; text-align: center; }
-.nav { display: flex; justify-content: center; margin-bottom: 30px; }
-.nav a { text-decoration: none; margin: 0 15px; text-align: center; color: white; font-weight: bold; }
-.nav a img { width: 60px; display: block; margin: 0 auto 5px; }
-.section { margin: 50px; background-color: white; padding: 20px; border-radius: 10px; }
-.answer { display: none; margin-top: 5px; color: green; }
-button.show-answer { margin-top: 5px; }
+body { font-family: Arial, sans-serif; direction: rtl; text-align: center; margin: 20px; background-color: #ff4d4d; color: white; }
+h1 { color: white; }
+.category { display: inline-block; margin: 20px; padding: 20px; border: 2px solid white; border-radius: 10px; cursor: pointer; }
+button { margin-top: 20px; padding: 10px 15px; font-size: 16px; cursor: pointer; }
+.answer, #nextBtn { display: none; margin-top: 15px; color: yellow; }
 </style>
-<script>
-function toggleAnswer(id) {
-    var x = document.getElementById(id);
-    if(x.style.display === "none"){ x.style.display="block"; } else{ x.style.display="none"; }
-}
-</script>
 </head>
 <body>
-<div class="header">
-<img src="https://upload.wikimedia.org/wikipedia/commons/a/ac/Question_mark_icon.png" alt="Logo">
-<div>⚡️</div>
-<div class="credit">من إعداد sułtan</div>
-</div>
+<div id="home">
 <h1>مسابقة أسئلة وإجابات</h1>
-<div class="nav">
-<a href="#religious"><img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Mosque_icon.png" alt="ديني">🕌 ديني</a>
-<a href="#geography"><img src="https://upload.wikimedia.org/wikipedia/commons/8/8b/Globe_icon.png" alt="جغرافيا">🌍 جغرافيا</a>
-<a href="#general"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/Brain_icon.png" alt="عام">🧠 عام</a>
+<div>من إعداد sułtan ⚡️</div>
+<div class="category" onclick="startQuiz('religious')">🕌 الأسئلة الدينية</div>
+<div class="category" onclick="startQuiz('geography')">🌍 أسئلة جغرافيا ودول</div>
+<div class="category" onclick="startQuiz('general')">🧠 أسئلة عامة</div>
 </div>
 
-<div class="section" id="religious">
-<h2>🕌 الأسئلة الدينية</h2>
-<ol>
-<li>كم عدد أركان الإسلام?<br><button class="show-answer" onclick="toggleAnswer('r1')">أظهر الإجابة</button><div class="answer" id="r1">5</div></li>
-<li>كم عدد أركان الإيمان?<br><button class="show-answer" onclick="toggleAnswer('r2')">أظهر الإجابة</button><div class="answer" id="r2">6</div></li>
-<li>من هو أول نبي?<br><button class="show-answer" onclick="toggleAnswer('r3')">أظهر الإجابة</button><div class="answer" id="r3">آدم</div></li>
-<li>من هو خاتم الأنبياء?<br><button class="show-answer" onclick="toggleAnswer('r4')">أظهر الإجابة</button><div class="answer" id="r4">محمد ﷺ</div></li>
-<li>كم عدد الصلوات المفروضة في اليوم?<br><button class="show-answer" onclick="toggleAnswer('r5')">أظهر الإجابة</button><div class="answer" id="r5">5</div></li>
-<!-- أكمل باقي الأسئلة الدينية بنفس النمط -->
-</ol>
+<div id="quiz" style="display:none;">
+<h2 id="question"></h2>
+<button id="showAnswer" onclick="revealAnswer()">أظهر الإجابة</button>
+<div class="answer" id="answer"></div>
+<button id="nextBtn" onclick="nextQuestion()">السؤال التالي</button>
+<br>
+<button onclick="backToCategories()" style="margin-top:20px;">العودة للكاتقوري</button>
 </div>
 
-<div class="section" id="geography">
-<h2>🌍 أسئلة جغرافيا ودول</h2>
-<ol>
-<li>ما عاصمة فرنسا?<br><button class="show-answer" onclick="toggleAnswer('g1')">أظهر الإجابة</button><div class="answer" id="g1">باريس</div></li>
-<li>ما عاصمة اليابان?<br><button class="show-answer" onclick="toggleAnswer('g2')">أظهر الإجابة</button><div class="answer" id="g2">طوكيو</div></li>
-<li>ما عاصمة إيطاليا?<br><button class="show-answer" onclick="toggleAnswer('g3')">أظهر الإجابة</button><div class="answer" id="g3">روما</div></li>
-<li>ما عاصمة مصر?<br><button class="show-answer" onclick="toggleAnswer('g4')">أظهر الإجابة</button><div class="answer" id="g4">القاهرة</div></li>
-<li>ما عاصمة تركيا?<br><button class="show-answer" onclick="toggleAnswer('g5')">أظهر الإجابة</button><div class="answer" id="g5">أنقرة</div></li>
-<!-- أكمل باقي أسئلة الجغرافيا بنفس النمط -->
-</ol>
-</div>
+<script>
+const quizzes = {
+  religious:[
+    {q:"سؤال ديني 1", a:"جواب ديني 1"}, {q:"سؤال ديني 2", a:"جواب ديني 2"},
+    {q:"سؤال ديني 3", a:"جواب ديني 3"}, {q:"سؤال ديني 4", a:"جواب ديني 4"},
+    {q:"سؤال ديني 5", a:"جواب ديني 5"}, {q:"سؤال ديني 6", a:"جواب ديني 6"},
+    {q:"سؤال ديني 7", a:"جواب ديني 7"}, {q:"سؤال ديني 8", a:"جواب ديني 8"},
+    {q:"سؤال ديني 9", a:"جواب ديني 9"}, {q:"سؤال ديني 10", a:"جواب ديني 10"},
+    {q:"سؤال ديني 11", a:"جواب ديني 11"}, {q:"سؤال ديني 12", a:"جواب ديني 12"},
+    {q:"سؤال ديني 13", a:"جواب ديني 13"}, {q:"سؤال ديني 14", a:"جواب ديني 14"},
+    {q:"سؤال ديني 15", a:"جواب ديني 15"}, {q:"سؤال ديني 16", a:"جواب ديني 16"},
+    {q:"سؤال ديني 17", a:"جواب ديني 17"}, {q:"سؤال ديني 18", a:"جواب ديني 18"},
+    {q:"سؤال ديني 19", a:"جواب ديني 19"}, {q:"سؤال ديني 20", a:"جواب ديني 20"},
+    {q:"سؤال ديني 21", a:"جواب ديني 21"}, {q:"سؤال ديني 22", a:"جواب ديني 22"},
+    {q:"سؤال ديني 23", a:"جواب ديني 23"}, {q:"سؤال ديني 24", a:"جواب ديني 24"},
+    {q:"سؤال ديني 25", a:"جواب ديني 25"}, {q:"سؤال ديني 26", a:"جواب ديني 26"},
+    {q:"سؤال ديني 27", a:"جواب ديني 27"}, {q:"سؤال ديني 28", a:"جواب ديني 28"},
+    {q:"سؤال ديني 29", a:"جواب ديني 29"}, {q:"سؤال ديني 30", a:"جواب ديني 30"},
+    {q:"سؤال ديني 31", a:"جواب ديني 31"}, {q:"سؤال ديني 32", a:"جواب ديني 32"},
+    {q:"سؤال ديني 33", a:"جواب ديني 33"}, {q:"سؤال ديني 34", a:"جواب ديني 34"},
+    {q:"سؤال ديني 35", a:"جواب ديني 35"}, {q:"سؤال ديني 36", a:"جواب ديني 36"},
+    {q:"سؤال ديني 37", a:"جواب ديني 37"}, {q:"سؤال ديني 38", a:"جواب ديني 38"},
+    {q:"سؤال ديني 39", a:"جواب ديني 39"}, {q:"سؤال ديني 40", a:"جواب ديني 40"},
+    {q:"سؤال ديني 41", a:"جواب ديني 41"}, {q:"سؤال ديني 42", a:"جواب ديني 42"},
+    {q:"سؤال ديني 43", a:"جواب ديني 43"}, {q:"سؤال ديني 44", a:"جواب ديني 44"},
+    {q:"سؤال ديني 45", a:"جواب ديني 45"}, {q:"سؤال ديني 46", a:"جواب ديني 46"},
+    {q:"سؤال ديني 47", a:"جواب ديني 47"}, {q:"سؤال ديني 48", a:"جواب ديني 48"},
+    {q:"سؤال ديني 49", a:"جواب ديني 49"}, {q:"سؤال ديني 50", a:"جواب ديني 50"}
+  ],
+  geography:[
+    {q:"سؤال جغرافيا 1", a:"جواب جغرافيا 1"}, {q:"سؤال جغرافيا 2", a:"جواب جغرافيا 2"},
+    {q:"سؤال جغرافيا 3", a:"جواب جغرافيا 3"}, {q:"سؤال جغرافيا 4", a:"جواب جغرافيا 4"},
+    {q:"سؤال جغرافيا 5", a:"جواب جغرافيا 5"}, {q:"سؤال جغرافيا 6", a:"جواب جغرافيا 6"},
+    {q:"سؤال جغرافيا 7", a:"جواب جغرافيا 7"}, {q:"سؤال جغرافيا 8", a:"جواب جغرافيا 8"},
+    {q:"سؤال جغرافيا 9", a:"جواب جغرافيا 9"}, {q:"سؤال جغرافيا 10", a:"جواب جغرافيا 10"},
+    {q:"سؤال جغرافيا 11", a:"جواب جغرافيا 11"}, {q:"سؤال جغرافيا 12", a:"جواب جغرافيا 12"},
+    {q:"سؤال جغرافيا 13", a:"جواب جغرافيا 13"}, {q:"سؤال جغرافيا 14", a:"جواب جغرافيا 14"},
+    {q:"سؤال جغرافيا 15", a:"جواب جغرافيا 15"}, {q:"سؤال جغرافيا 16", a:"جواب جغرافيا 16"},
+    {q:"سؤال جغرافيا 17", a:"جواب جغرافيا 17"}, {q:"سؤال جغرافيا 18", a:"جواب جغرافيا 18"},
+    {q:"سؤال جغرافيا 19", a:"جواب جغرافيا 19"}, {q:"سؤال جغرافيا 20", a:"جواب جغرافيا 20"},
+    {q:"سؤال جغرافيا 21", a:"جواب جغرافيا 21"}, {q:"سؤال جغرافيا 22", a:"جواب جغرافيا 22"},
+    {q:"سؤال جغرافيا 23", a:"جواب جغرافيا 23"}, {q:"سؤال جغرافيا 24", a:"جواب جغرافيا 24"},
+    {q:"سؤال جغرافيا 25", a:"جواب جغرافيا 25"}, {q:"سؤال جغرافيا 26", a:"جواب جغرافيا 26"},
+    {q:"سؤال جغرافيا 27", a:"جواب جغرافيا 27"}, {q:"سؤال جغرافيا 28", a:"جواب جغرافيا 28"},
+    {q:"سؤال جغرافيا 29", a:"جواب جغرافيا 29"}, {q:"سؤال جغرافيا 30", a:"جواب جغرافيا 30"},
+    {q:"سؤال جغرافيا 31", a:"جواب جغرافيا 31"}, {q:"سؤال جغرافيا 32", a:"جواب جغرافيا 32"},
+    {q:"سؤال جغرافيا 33", a:"جواب جغرافيا 33"}, {q:"سؤال جغرافيا 34", a:"جواب جغرافيا 34"},
+    {q:"سؤال جغرافيا 35", a:"جواب جغرافيا 35"}, {q:"سؤال جغرافيا 36", a:"جواب جغرافيا 36"},
+    {q:"سؤال جغرافيا 37", a:"جواب جغرافيا 37"}, {q:"سؤال جغرافيا 38", a:"جواب جغرافيا 38"},
+    {q:"سؤال جغرافيا 39", a:"جواب جغرافيا 39"}, {q:"سؤال جغرافيا 40", a:"جواب جغرافيا 40"}
+  ],
+  general:[
+    {q:"سؤال عام 1", a:"جواب عام 1"}, {q:"سؤال عام 2", a:"جواب عام 2"},
+    {q:"سؤال عام 3", a:"جواب عام 3"}, {q:"سؤال عام 4", a:"جواب عام 4"},
+    {q:"سؤال عام 5", a:"جواب عام 5"}, {q:"سؤال عام 6", a:"جواب عام 6"},
+    {q:"سؤال عام 7", a:"جواب عام 7"}, {q:"سؤال عام 8", a:"جواب عام 8"},
+    {q:"سؤال عام 9", a:"جواب عام 9"}, {q:"سؤال عام 10", a:"جواب عام 10"},
+    {q:"سؤال عام 11", a:"جواب عام 11"}, {q:"سؤال عام 12", a:"جواب عام 12"},
+    {q:"سؤال عام 13", a:"جواب عام 13"}, {q:"سؤال عام 14", a:"جواب عام 14"},
+    {q:"سؤال عام 15", a:"جواب عام 15"}, {q:"سؤال عام 16", a:"جواب عام 16"},
+    {q:"سؤال عام 17", a:"جواب عام 17"}, {q:"سؤال عام 18", a:"جواب عام 18"},
+    {q:"سؤال عام 19", a:"جواب عام 19"}, {q:"سؤال عام 20", a:"جواب عام 20"},
+    {q:"سؤال عام 21", a:"جواب عام 21"}, {q:"سؤال عام 22", a:"جواب عام 22"},
+    {q:"سؤال عام 23", a:"جواب عام 23"}, {q:"سؤال عام 24", a:"جواب عام 24"},
+    {q:"سؤال عام 25", a:"جواب عام 25"}, {q:"سؤال عام 26", a:"جواب عام 26"},
+    {q:"سؤال عام 27", a:"جواب عام 27"}, {q:"سؤال عام 28", a:"جواب عام 28"},
+    {q:"سؤال عام 29", a:"جواب عام 29"}, {q:"سؤال عام 30", a:"جواب عام 30"},
+    {q:"سؤال عام 31", a:"جواب عام 31"}, {q:"سؤال عام 32", a:"جواب عام 32"},
+    {q:"سؤال عام 33", a:"جواب عام 33"}, {q:"سؤال عام 34", a:"جواب عام 34"},
+    {q:"سؤال عام 35", a:"جواب عام 35"}, {q:"سؤال عام 36", a:"جواب عام 36"},
+    {q:"سؤال عام 37", a:"جواب عام 37"}, {q:"سؤال عام 38", a:"جواب عام 38"},
+    {q:"سؤال عام 39", a:"جواب عام 39"}, {q:"سؤال عام 40", a:"جواب عام 40"}
+  ]
+};
 
-<div class="section" id="general">
-<h2>🧠 أسئلة عامة</h2>
-<ol>
-<li>كم عدد أيام السنة?<br><button class="show-answer" onclick="toggleAnswer('gen1')">أظهر الإجابة</button><div class="answer" id="gen1">365</div></li>
-<li>كم عدد شهور السنة?<br><button class="show-answer" onclick="toggleAnswer('gen2')">أظهر الإجابة</button><div class="answer" id="gen2">12</div></li>
-<li>كم عدد قارات العالم?<br><button class="show-answer" onclick="toggleAnswer('gen3')">أظهر الإجابة</button><div class="answer" id="gen3">7</div></li>
-<li>كم عدد لاعبي فريق كرة القدم?<br><button class="show-answer" onclick="toggleAnswer('gen4')">أظهر الإجابة</button><div class="answer" id="gen4">11</div></li>
-<li>ما أسرع حيوان بري?<br><button class="show-answer" onclick="toggleAnswer('gen5')">أظهر الإجابة</button><div class="answer" id="gen5">الفهد</div></li>
-<!-- أكمل باقي الأسئلة العامة بنفس النمط -->
-</ol>
-</div>
+let currentCategory = '';
+let currentIndex = 0;
 
-<div style="text-align:center; margin-top:30px;">
-<a href="#top" style="color:white;">العودة للأعلى</a>
-</div>
+function startQuiz(category){
+  currentCategory = category;
+  currentIndex = 0;
+  document.getElementById('home').style.display='none';
+  document.getElementById('quiz').style.display='block';
+  showQuestion();
+}
 
+function showQuestion(){
+  const qObj = quizzes[currentCategory][currentIndex];
+  document.getElementById('question').textContent = qObj.q;
+  document.getElementById('answer').textContent = qObj.a;
+  document.getElementById('answer').style.display='none';
+  document.getElementById('showAnswer').style.display='inline-block';
+  document.getElementById('nextBtn').style.display='none';
+}
+
+function revealAnswer(){
+  document.getElementById('answer').style.display='block';
+  document.getElementById('nextBtn').style.display='inline-block';
+  document.getElementById('showAnswer').style.display='none';
+}
+
+function nextQuestion(){
+  currentIndex++;
+  if(currentIndex<quizzes[currentCategory].length){
+    showQuestion();
+  }else{
+    alert("انتهت الأسئلة في هذا الكاتقوري!");
+    backToCategories();
+  }
+}
+
+function backToCategories(){
+  document.getElementById('quiz').style.display='none';
+  document.getElementById('home').style.display='block';
+}
+</script>
 </body>
 </html>
