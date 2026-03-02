@@ -21,16 +21,16 @@ h1 { font-size: 50px; color:black; margin-bottom: 10px; }
 .categories { display: flex; gap: 40px; flex-wrap: nowrap; }
 .category { padding: 30px 40px; border: 2px solid black; border-radius: 15px; font-size:28px; cursor:pointer; background-color:white; color:black; }
 button { margin-top: 20px; padding: 12px 20px; font-size: 22px; cursor: pointer; background-color: #3498db; color: white; border:none; border-radius: 8px; }
-#quiz { text-align:center; }
-#question { font-size:32px; margin-top:40px; color:black; }
-.answer { display:none; margin-top:20px; color:black; font-size:28px; }
+#quiz { display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; }
+#question { font-size:32px; margin-top:40px; color:black; text-align:center; }
+.answer { display:none; margin-top:20px; color:black; font-size:28px; text-align:center; }
 </style>
 </head>
 <body>
 
 <div id="home">
   <h1>مسابقة أسئلة وإجابات</h1>
-  <div id="subtitle">من إعداد sułtan ⚡️<br>Server: Alva</div>
+  <div id="subtitle">من إعداد sułtan⚡️ - ميم⚡️<br>Server: Alva</div>
   <div class="categories">
     <div class="category" onclick="startQuiz('religious')">🕌 الأسئلة الدينية</div>
     <div class="category" onclick="startQuiz('geography')">🌍 أسئلة جغرافيا ودول</div>
@@ -38,7 +38,7 @@ button { margin-top: 20px; padding: 12px 20px; font-size: 22px; cursor: pointer;
   </div>
 </div>
 
-<div id="quiz" style="display:none;">
+<div id="quiz">
 <h2 id="categoryTitle"></h2>
 <button id="showQuestionBtn" onclick="showQuestionFunc()">أظهر السؤال</button>
 <div id="question"></div>
@@ -58,7 +58,6 @@ function shuffle(array){
   return array; 
 }
 
-// الأسئلة 130 كاملة ومحدثة بحيث كل كاتقوري 45 سؤال
 const quizzes = {
 religious: shuffle([
 {q:"كم عدد أركان الإسلام؟", a:"5"},
@@ -158,18 +157,6 @@ general: shuffle([
 {q:"ما الثمرة التي تحتوي على أكبر كمية فيتامين C؟", a:"الكيوي"},
 {q:"ما أول دولة استخدمت الإنترنت؟", a:"الولايات المتحدة الأمريكية"},
 {q:"ما أول دولة أطلقت القمر الصناعي؟", a:"الاتحاد السوفيتي"},
-{q:"كم عدد لاعبي فريق كرة اليد؟", a:"7"},
-{q:"كم عدد الكواكب في المجموعة الشمسية؟", a:"8"},
-{q:"ما أسرع طائر في العالم؟", a:"الصقر الشاهين"},
-{q:"ما أكبر حيوان بري؟", a:"الفيل الأفريقي"},
-{q:"ما أطول جسر في العالم؟", a:"جسر دانيانغ-كونشان الكبير"},
-{q:"ما أكبر بركان نشط في العالم؟", a:"ماونا لوا"},
-{q:"ما أطول شلال في العالم؟", a:"شلال أنجل"},
-{q:"ما أكبر جزيرة في العالم؟", a:"غرينلاند"},
-{q:"ما أعلى شلال في أفريقيا؟", a:"شلال فيكتوريا"},
-{q:"ما أقصر نهر في العالم؟", a:"نهر رو"},
-{q:"ما أكبر خليج في العالم؟", a:"خليج البنغال"},
-{q:"ما أصغر محيط في العالم؟", a:"المحيط المتجمد الشمالي"}
 ])
 };
 
@@ -180,7 +167,7 @@ function startQuiz(category){
   currentCategory = category;
   currentIndex = 0;
   document.getElementById('home').style.display='none';
-  document.getElementById('quiz').style.display='block';
+  document.getElementById('quiz').style.display='flex';
   document.getElementById('categoryTitle').textContent = category==='religious'?"🕌 الأسئلة الدينية":category==='geography'?"🌍 أسئلة جغرافيا ودول":"🧠 أسئلة عامة";
   document.getElementById('showQuestionBtn').style.display='inline-block';
   document.getElementById('question').style.display='none';
