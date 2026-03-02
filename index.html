@@ -52,7 +52,6 @@ button { margin-top: 20px; padding: 14px 24px; font-size: 26px; cursor: pointer;
 <div id="quiz">
 <h2 id="categoryTitle"></h2>
 <div style="display:flex; gap:20px;">
-  <button id="showQuestionBtn" onclick="showQuestionFunc()">أظهر السؤال</button>
   <button id="showOptionsBtn" onclick="showOptionsFunc()">عرض 3 اختيارات</button>
   <button id="showAnswerBtn" onclick="showAnswerFunc()">أظهر الإجابة</button>
 </div>
@@ -72,7 +71,7 @@ function shuffle(array){
   return array; 
 }
 
-// كل الأسئلة الحقيقية كاملة
+// الأسئلة كاملة لكل الفئات (45 ديني + 45 جغرافيا + 40 عام)
 const quizzes = {
 religious: shuffle([
 {q:"كم عدد أركان الإسلام؟", a:"5"},
@@ -184,15 +183,7 @@ function startQuiz(category){
   document.getElementById('home').style.display='none';
   document.getElementById('quiz').style.display='flex';
   document.getElementById('categoryTitle').textContent = category==='religious'?"🕌 الأسئلة الدينية":category==='geography'?"🌍 أسئلة جغرافيا ودول":"🧠 أسئلة عامة";
-  document.getElementById('question').style.display='none';
-  document.getElementById('options').style.display='none';
-  document.getElementById('nextBtn').style.display='none';
-}
-
-function showQuestionFunc(){
-  const currentQ = quizzes[currentCategory][currentIndex];
-  document.getElementById('question').textContent = currentQ.q;
-  document.getElementById('question').style.display='block';
+  document.getElementById('question').textContent = quizzes[currentCategory][currentIndex].q;
   document.getElementById('options').style.display='none';
   document.getElementById('nextBtn').style.display='none';
 }
@@ -234,10 +225,9 @@ function checkAnswer(selected, correct){
 function nextQuestion(){
   currentIndex++;
   if(currentIndex<quizzes[currentCategory].length){
-    document.getElementById('question').style.display='none';
+    document.getElementById('question').textContent = quizzes[currentCategory][currentIndex].q;
     document.getElementById('options').style.display='none';
     document.getElementById('nextBtn').style.display='none';
-    document.getElementById('showQuestionBtn').style.display='inline-block';
   }else{
     alert("انتهت الأسئلة في هذا الكاتقوري!");
     backToCategories();
