@@ -5,10 +5,20 @@
 <title>مسابقة أسئلة وإجابات</title>
 <style>
 body { font-family: Arial, sans-serif; direction: rtl; background-color: orange; margin:0; padding:0; text-align:center; }
-#home { position: absolute; top:50%; left:50%; transform: translate(-50%, -50%); }
-h1 { font-size: 50px; color:black; margin-bottom: 20px; }
+#home {
+  position: absolute;
+  top:50%;
+  left:50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  gap: 20px; /* المسافة بين الكاتقوري */
+  flex-wrap: wrap; /* إذا الشاشة صغيرة، ينزلوا لسطر ثاني */
+  text-align: center;
+}
+h1 { font-size: 50px; color:black; margin-bottom: 20px; width:100%; }
 h2 { font-size: 36px; color:black; margin-bottom: 20px; }
-.category { display: inline-block; margin: 20px; padding: 30px 40px; border: 2px solid black; border-radius: 15px; font-size:28px; cursor:pointer; background-color:white; color:black; }
+.category { padding: 30px 40px; border: 2px solid black; border-radius: 15px; font-size:28px; cursor:pointer; background-color:white; color:black; }
 button { margin-top: 20px; padding: 12px 20px; font-size: 22px; cursor: pointer; background-color: #3498db; color: white; border:none; border-radius: 8px; }
 #quiz { text-align:center; }
 #question { font-size:32px; margin-top:40px; color:black; }
@@ -18,11 +28,13 @@ button { margin-top: 20px; padding: 12px 20px; font-size: 22px; cursor: pointer;
 <body>
 
 <div id="home">
-<h1>مسابقة أسئلة وإجابات</h1>
-<div style="font-size:24px; margin-bottom:30px; color:black;">من إعداد sułtan ⚡️</div>
-<div class="category" onclick="startQuiz('religious')">🕌 الأسئلة الدينية</div>
-<div class="category" onclick="startQuiz('geography')">🌍 أسئلة جغرافيا ودول</div>
-<div class="category" onclick="startQuiz('general')">🧠 أسئلة عامة</div>
+  <div style="width:100%;">
+    <h1>مسابقة أسئلة وإجابات</h1>
+    <div style="font-size:24px; margin-bottom:30px; color:black;">من إعداد sułtan ⚡️</div>
+  </div>
+  <div class="category" onclick="startQuiz('religious')">🕌 الأسئلة الدينية</div>
+  <div class="category" onclick="startQuiz('geography')">🌍 أسئلة جغرافيا ودول</div>
+  <div class="category" onclick="startQuiz('general')">🧠 أسئلة عامة</div>
 </div>
 
 <div id="quiz" style="display:none;">
@@ -187,7 +199,7 @@ function nextQuestion(){
 
 function backToCategories(){
   document.getElementById('quiz').style.display='none';
-  document.getElementById('home').style.display='block';
+  document.getElementById('home').style.display='flex';
 }
 </script>
 
