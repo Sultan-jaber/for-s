@@ -1,4 +1,15 @@
-# إنشاء ملف HTML جاهز مع الفهرس والأسئلة
+
+
+religious_questions = [f"سؤال ديني {i+1}؟" for i in range(50)]
+religious_answers = [f"جواب ديني {i+1}" for i in range(50)]
+
+geography_questions = [f"سؤال جغرافيا {i+1}؟" for i in range(40)]
+geography_answers = [f"جواب جغرافيا {i+1}" for i in range(40)]
+
+general_questions = [f"سؤال عام {i+1}؟" for i in range(40)]
+general_answers = [f"جواب عام {i+1}" for i in range(40)]
+
+# بناء HTML
 html_content = """
 <!DOCTYPE html>
 <html lang="ar">
@@ -7,14 +18,24 @@ html_content = """
 <title>مسابقة أسئلة وإجابات</title>
 <style>
 body { font-family: Arial, sans-serif; direction: rtl; text-align: right; margin: 20px; }
-h1, h2 { color: #2E86C1; }
-a { text-decoration: none; color: #FF5733; font-weight: bold; }
+h1, h2 { color: #2E86C1; text-align: center; }
+a { text-decoration: none; color: #FF5733; font-weight: bold; margin: 0 10px; }
 a:hover { text-decoration: underline; }
-.section { margin-top: 40px; }
 .header { text-align: center; margin-bottom: 20px; }
-.header img { width: 100px; }
+.header img { width: 150px; }
 .header .credit { margin-top: 5px; font-size: 14px; }
+.section { margin-top: 50px; }
+ol { margin: 20px; }
+.answer { display: none; margin-top: 5px; color: green; }
+button.show-answer { margin-top: 5px; }
 </style>
+<script>
+function toggleAnswer(id) {
+    var x = document.getElementById(id);
+    if (x.style.display === "none") { x.style.display = "block"; } 
+    else { x.style.display = "none"; }
+}
+</script>
 </head>
 <body>
 
@@ -25,52 +46,34 @@ a:hover { text-decoration: underline; }
 </div>
 
 <h1>مسابقة أسئلة وإجابات</h1>
-<h2>الفهرس</h2>
-<ul>
-<li><a href="#religious">🕌 الأسئلة الدينية</a></li>
-<li><a href="#geography">🌍 أسئلة جغرافيا ودول</a></li>
-<li><a href="#general">🧠 أسئلة عامة</a></li>
-</ul>
+
+<div style="text-align:center; margin-bottom:30px;">
+<a href="#religious">🕌 الأسئلة الدينية</a> |
+<a href="#geography">🌍 أسئلة جغرافيا ودول</a> |
+<a href="#general">🧠 أسئلة عامة</a>
+</div>
 
 <div class="section" id="religious">
 <h2>🕌 الأسئلة الدينية</h2>
 <ol>
-<li>كم عدد أركان الإسلام؟ | الجواب: 5</li>
-<li>كم عدد أركان الإيمان؟ | الجواب: 6</li>
-<li>من هو أول نبي؟ | الجواب: آدم</li>
-<li>من هو خاتم الأنبياء؟ | الجواب: محمد ﷺ</li>
-<li>كم عدد الصلوات المفروضة في اليوم؟ | الجواب: 5</li>
-</ol>
-</div>
-
-<div class="section" id="geography">
-<h2>🌍 أسئلة جغرافيا ودول</h2>
-<ol>
-<li>ما عاصمة فرنسا؟ | الجواب: باريس</li>
-<li>ما عاصمة اليابان؟ | الجواب: طوكيو</li>
-<li>ما عاصمة إيطاليا؟ | الجواب: روما</li>
-<li>ما عاصمة مصر؟ | الجواب: القاهرة</li>
-<li>ما عاصمة تركيا؟ | الجواب: أنقرة</li>
-</ol>
-</div>
-
-<div class="section" id="general">
-<h2>🧠 أسئلة عامة</h2>
-<ol>
-<li>كم عدد أيام السنة؟ | الجواب: 365</li>
-<li>كم عدد شهور السنة؟ | الجواب: 12</li>
-<li>كم عدد قارات العالم؟ | الجواب: 7</li>
-<li>كم عدد لاعبي فريق كرة القدم؟ | الجواب: 11</li>
-<li>ما أسرع حيوان بري؟ | الجواب: الفهد</li>
-</ol>
-</div>
-
-</body>
-</html>
 """
 
-# حفظ الملف
-file_path = "/mnt/data/مسابقة_أسئلة_إجابات.html"
+for i, (q, a) in enumerate(zip(religious_questions, religious_answers)):
+    html_content += f'<li>{q}<br><button class="show-answer" onclick="toggleAnswer(\'r{i}\')">أظهر الإجابة</button><div class="answer" id="r{i}">{a}</div></li>\n'
+
+html_content += "</ol></div>\n<div class='section' id='geography'><h2>🌍 أسئلة جغرافيا ودول</h2><ol>\n"
+
+for i, (q, a) in enumerate(zip(geography_questions, geography_answers)):
+    html_content += f'<li>{q}<br><button class="show-answer" onclick="toggleAnswer(\'g{i}\')">أظهر الإجابة</button><div class="answer" id="g{i}">{a}</div></li>\n'
+
+html_content += "</ol></div>\n<div class='section' id='general'><h2>🧠 أسئلة عامة</h2><ol>\n"
+
+for i, (q, a) in enumerate(zip(general_questions, general_answers)):
+    html_content += f'<li>{q}<br><button class="show-answer" onclick="toggleAnswer(\'gen{i}\')">أظهر الإجابة</button><div class="answer" id="gen{i}">{a}</div></li>\n'
+
+html_content += "</ol></div>\n<div style='text-align:center; margin-top:30px;'><a href='#top'>العودة للأعلى</a></div>\n</body></html>"
+
+file_path = "/mnt/data/مسابقة_130_سؤال.html"
 with open(file_path, "w", encoding="utf-8") as f:
     f.write(html_content)
 
