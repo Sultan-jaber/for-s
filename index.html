@@ -1,79 +1,34 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <title>مسابقة أسئلة وإجابات</title>
-
 <style>
 body{
-font-family: Arial;
-background: orange;
-direction: rtl;
-text-align:center;
-margin:0;
+  font-family: Arial;
+  background: orange;
+  margin:0;
+  padding:0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  text-align:center;
+  flex-direction:column;
 }
-
-h1{
-font-size:50px;
-margin-top:60px;
-}
-
-h2{
-margin:5px;
-}
-
-.categories{
-display:flex;
-justify-content:center;
-gap:20px;
-margin-top:60px;
-flex-wrap:nowrap;
-}
-
-.cat{
-background:white;
-padding:20px 40px;
-font-size:22px;
-cursor:pointer;
-border-radius:10px;
-}
-
-#quiz{
-display:none;
-margin-top:100px;
-}
-
-#question{
-font-size:30px;
-margin-bottom:40px;
-}
-
-button{
-font-size:20px;
-padding:10px 20px;
-margin:10px;
-cursor:pointer;
-}
-
-.option{
-background:white;
-margin:10px auto;
-padding:10px;
-width:300px;
-border-radius:8px;
-}
-
-#options{
-display:none;
-}
-
-#answer{
-font-size:25px;
-margin-top:20px;
-}
+h1{font-size:60px;margin:20px 0;}
+h2{font-size:28px;margin:10px 0;}
+h3{font-size:24px;margin:10px 0 30px 0;}
+.categories{display:flex;justify-content:center;gap:30px;margin-bottom:50px;flex-wrap:wrap;}
+.cat{background:white;padding:25px 50px;font-size:28px;cursor:pointer;border-radius:12px;}
+#quiz{display:none;}
+#question{font-size:36px;margin-bottom:40px;}
+button{font-size:24px;padding:15px 25px;margin:10px;cursor:pointer;}
+.option{background:white;margin:15px auto;padding:15px;width:350px;border-radius:10px;font-size:24px;}
+#options{display:none;}
+#answer{font-size:28px;margin-top:25px;}
 </style>
 </head>
-
 <body>
 
 <h1>مسابقة أسئلة وإجابات</h1>
@@ -81,138 +36,103 @@ margin-top:20px;
 <h3>Server: Alva</h3>
 
 <div id="home">
-<div class="categories">
-<div class="cat" onclick="startQuiz('religion')">🕌 الأسئلة الدينية</div>
-<div class="cat" onclick="startQuiz('geo')">🌍 أسئلة جغرافيا ودول</div>
-<div class="cat" onclick="startQuiz('general')">🧠 أسئلة عامة</div>
-</div>
+  <div class="categories">
+    <div class="cat" onclick="startQuiz('religion')">🕌 الأسئلة الدينية</div>
+    <div class="cat" onclick="startQuiz('geo')">🌍 أسئلة جغرافيا ودول</div>
+    <div class="cat" onclick="startQuiz('general')">🧠 أسئلة عامة</div>
+  </div>
 </div>
 
 <div id="quiz">
-<div id="question"></div>
-
-<div>
-<button onclick="showOptions()">عرض 3 خيارات</button>
-<button onclick="showAnswer()">إظهار الإجابة</button>
-</div>
-
-<div id="options"></div>
-<div id="answer"></div>
-
-<button onclick="nextQuestion()">السؤال التالي</button>
-<br>
-<button onclick="backHome()">العودة للكاتقوري</button>
+  <div id="question"></div>
+  <div>
+    <button onclick="showOptions()">عرض 3 خيارات</button>
+    <button onclick="showAnswer()">إظهار الإجابة</button>
+  </div>
+  <div id="options"></div>
+  <div id="answer"></div>
+  <button onclick="nextQuestion()">السؤال التالي</button>
+  <br>
+  <button onclick="backHome()">العودة للكاتقوري</button>
 </div>
 
 <script>
-function shuffle(array){
-for(let i=array.length-1;i>0;i--){
-let j=Math.floor(Math.random()*(i+1));
-[array[i],array[j]]=[array[j],array[i]];
-}
-return array;
-}
+function shuffle(array){for(let i=array.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[array[i],array[j]]=[array[j],array[i]];}return array;}
 
-// كل الاسئلة كاملة
-const quizzes={
-religion:shuffle([
-{q:"كم عدد أركان الإسلام؟",a:"5"},
-{q:"كم عدد أركان الإيمان؟",a:"6"},
-{q:"من هو أول نبي؟",a:"آدم"},
-{q:"من هو خاتم الأنبياء؟",a:"محمد بن عبد الله"},
-{q:"كم عدد الصلوات المفروضة في اليوم؟",a:"5"},
-{q:"ما اسم والد النبي محمد بن عبد الله؟",a:"عبد الله بن المطلب"},
-{q:"ما اسم والدة النبي محمد بن عبد الله؟",a:"آمنة بنت وهب"},
-{q:"من هو أول خليفة في الإسلام؟",a:"أبو بكر الصديق"},
-{q:"من هو الصحابي الملقب بالفاروق؟",a:"عمر بن الخطاب"},
-{q:"من هو الصحابي الملقب بسيف الله المسلول؟",a:"خالد بن الوليد"},
-{q:"ما اسم زوجة النبي الأولى؟",a:"خديجة بنت خويلد"},
-{q:"ما اسم الغار الذي نزل فيه الوحي أول مرة؟",a:"غار حراء"},
-{q:"ما اسم الليلة التي هي خير من ألف شهر؟",a:"ليلة القدر"},
-{q:"في أي شهر يصوم المسلمون؟",a:"رمضان"},
-{q:"ما أول مسجد بني في الإسلام؟",a:"مسجد قباء"},
-{q:"كم عدد سور القرآن الكريم؟",a:"114"},
-{q:"ما أطول سورة في القرآن؟",a:"سورة البقرة"},
-{q:"ما أقصر سورة في القرآن؟",a:"سورة الكوثر"},
-{q:"ما السورة التي لا تبدأ بالبسملة؟",a:"سورة التوبة"},
-{q:"من هو النبي الذي ابتلعه الحوت؟",a:"يونس"},
-{q:"من هو النبي الذي كلمه الله؟",a:"موسى"},
-{q:"ما اسم أول معركة في الإسلام؟",a:"غزوة بدر"},
-{q:"من مؤذن الرسول ﷺ؟",a:"بلال بن رباح"},
-{q:"كم عدد أجزاء القرآن الكريم؟",a:"30"},
-{q:"ما اسم قبلة المسلمين الأولى؟",a:"المسجد الأقصى"},
-{q:"من هو النبي الذي بنى السفينة؟",a:"نوح"},
-{q:"من هو النبي الذي ألقي في النار؟",a:"إبراهيم"},
-{q:"من هو النبي الذي شق البحر بعصاه؟",a:"موسى"},
-{q:"من هو النبي الذي فُتن بالمرض سنوات طويلة؟",a:"أيوب"},
-{q:"ما اسم والد النبي إبراهيم؟",a:"آزر"},
-{q:"من هو النبي الذي تكلم في المهد؟",a:"عيسى"},
-{q:"كم عدد أيام الحج؟",a:"5 أيام"},
-{q:"ما اسم السورة التي تسمى قلب القرآن؟",a:"سورة يس"},
-{q:"من هو آخر الخلفاء الراشدين؟",a:"علي بن أبي طالب"},
-{q:"كم مرة ذكرت كلمة الجنة في القرآن؟",a:"145 مرة تقريبًا"},
-{q:"ما اسم النبي الذي أرسل إلى قوم عاد؟",a:"هود"},
-{q:"ما اسم النبي الذي أرسل إلى قوم ثمود؟",a:"صالح"},
-{q:"كم ركعة صلاة الفجر؟",a:"2"},
-{q:"كم ركعة صلاة المغرب؟",a:"3"},
-{q:"كم ركعة صلاة العشاء؟",a:"4"},
-{q:"ما اسم السورة التي تبدأ بالحمد لله؟",a:"الفاتحة"},
-{q:"ما اسم الصحابي الجليل الملقب بـ ذو النورين؟",a:"عثمان بن عفان"},
-{q:"ما اسم الصحابي الجليل الذي كُني بأبي هريرة؟",a:"عبد الرحمن بن صخر"},
-{q:"ما اسم الصحابي الذي قاتل في معركة أحد وأصيب في وجهه؟",a:"حمزة بن المطلب"},
-{q:"ما اسم النبي الذي ابتُلِي بصبر طويل وفقد أولاده؟",a:"أيوب"}
+const quizzes = {
+religion: shuffle([
+{q:"كم عدد أركان الإسلام؟",options:["5","6","4"],a:"5"},
+{q:"كم عدد أركان الإيمان؟",options:["6","5","7"],a:"6"},
+{q:"من هو أول نبي؟",options:["آدم","نوح","إبراهيم"],a:"آدم"},
+{q:"من هو خاتم الأنبياء؟",options:["محمد بن عبد الله","عيسى","موسى"],a:"محمد بن عبد الله"},
+{q:"كم عدد الصلوات المفروضة في اليوم؟",options:["5","4","3"],a:"5"},
+{q:"ما اسم والد النبي محمد بن عبد الله؟",options:["عبد الله بن المطلب","عبد الرحمن بن عوف","أبو بكر الصديق"],a:"عبد الله بن المطلب"},
+{q:"ما اسم والدة النبي محمد بن عبد الله؟",options:["آمنة بنت وهب","خديجة","هاجر"],a:"آمنة بنت وهب"},
+{q:"من هو أول خليفة في الإسلام؟",options:["أبو بكر الصديق","عمر بن الخطاب","عثمان بن عفان"],a:"أبو بكر الصديق"},
+{q:"من هو الصحابي الملقب بالفاروق؟",options:["عمر بن الخطاب","أبو بكر الصديق","عثمان بن عفان"],a:"عمر بن الخطاب"},
+{q:"من هو الصحابي الملقب بسيف الله المسلول؟",options:["خالد بن الوليد","علي بن أبي طالب","سعد بن أبي وقاص"],a:"خالد بن الوليد"},
+{q:"ما اسم زوجة النبي الأولى؟",options:["خديجة","آمنة","هاجر"],a:"خديجة"},
+{q:"ما اسم الغار الذي نزل فيه الوحي أول مرة؟",options:["غار حراء","غار ثور","غار الرقيم"],a:"غار حراء"},
+{q:"ما اسم الليلة التي هي خير من ألف شهر؟",options:["ليلة القدر","ليلة الإسراء","ليلة النصف من شعبان"],a:"ليلة القدر"},
+{q:"في أي شهر يصوم المسلمون؟",options:["رمضان","شوال","ذو الحجة"],a:"رمضان"},
+{q:"ما أول مسجد بني في الإسلام؟",options:["مسجد قباء","مسجد الرسول","المسجد الحرام"],a:"مسجد قباء"},
+{q:"كم عدد سور القرآن الكريم؟",options:["114","100","120"],a:"114"},
+{q:"ما أطول سورة في القرآن؟",options:["سورة البقرة","سورة آل عمران","سورة النساء"],a:"سورة البقرة"},
+{q:"ما أقصر سورة في القرآن؟",options:["سورة الكوثر","سورة العصر","سورة النصر"],a:"سورة الكوثر"},
+{q:"ما السورة التي لا تبدأ بالبسملة؟",options:["سورة التوبة","سورة الفاتحة","سورة الناس"],a:"سورة التوبة"},
+{q:"من هو النبي الذي ابتلعه الحوت؟",options:["يونس","نوح","موسى"],a:"يونس"},
+{q:"من هو النبي الذي كلمه الله؟",options:["موسى","عيسى","نوح"],a:"موسى"},
+{q:"ما اسم أول معركة في الإسلام؟",options:["غزوة بدر","غزوة أحد","غزوة خيبر"],a:"غزوة بدر"},
+{q:"من مؤذن الرسول ﷺ؟",options:["بلال بن رباح","أبو أيوب","سعد بن معاذ"],a:"بلال بن رباح"},
+{q:"كم عدد أجزاء القرآن الكريم؟",options:["30","20","25"],a:"30"},
+{q:"ما اسم قبلة المسلمين الأولى؟",options:["المسجد الأقصى","الكعبة","المسجد الحرام"],a:"المسجد الأقصى"},
+{q:"من هو النبي الذي بنى السفينة؟",options:["نوح","إبراهيم","موسى"],a:"نوح"},
+{q:"من هو النبي الذي ألقي في النار؟",options:["إبراهيم","نوح","موسى"],a:"إبراهيم"},
+{q:"من هو النبي الذي شق البحر بعصاه؟",options:["موسى","نوح","عيسى"],a:"موسى"},
+{q:"من هو النبي الذي فُتن بالمرض سنوات طويلة؟",options:["أيوب","محمد","إبراهيم"],a:"أيوب"},
+{q:"ما اسم والد النبي إبراهيم؟",options:["آزر","إدريس","نوح"],a:"آزر"},
+{q:"من هو النبي الذي تكلم في المهد؟",options:["عيسى","موسى","يونس"],a:"عيسى"},
+{q:"كم عدد أيام الحج؟",options:["5 أيام","6 أيام","7 أيام"],a:"5 أيام"},
+{q:"ما اسم السورة التي تسمى قلب القرآن؟",options:["سورة يس","سورة البقرة","سورة آل عمران"],a:"سورة يس"},
+{q:"من هو آخر الخلفاء الراشدين؟",options:["علي بن أبي طالب","عثمان بن عفان","عمر بن الخطاب"],a:"علي بن أبي طالب"},
+{q:"كم مرة ذكرت كلمة الجنة في القرآن؟",options:["145 مرة","120 مرة","100 مرة"],a:"145 مرة"},
+{q:"ما اسم النبي الذي أرسل إلى قوم عاد؟",options:["هود","صالح","شعيب"],a:"هود"},
+{q:"ما اسم النبي الذي أرسل إلى قوم ثمود؟",options:["صالح","هود","نوح"],a:"صالح"},
+{q:"كم ركعة صلاة الفجر؟",options:["2","3","4"],a:"2"},
+{q:"كم ركعة صلاة المغرب؟",options:["3","4","2"],a:"3"},
+{q:"كم ركعة صلاة العشاء؟",options:["4","3","2"],a:"4"},
+{q:"ما اسم السورة التي تبدأ بالحمد لله؟",options:["الفاتحة","البقرة","آل عمران"],a:"الفاتحة"},
+{q:"ما اسم الصحابي الجليل الملقب بـ “ذو النورين”؟",options:["عثمان بن عفان","علي","أبو بكر"],a:"عثمان بن عفان"},
+{q:"ما اسم الصحابي الجليل الذي كُني بأبي هريرة؟",options:["عبد الرحمن بن صخر","حمزة","بلال"],a:"عبد الرحمن بن صخر"},
+{q:"ما اسم الصحابي الذي قاتل في معركة أحد وأصيب في وجهه؟",options:["حمزة بن عبد المطلب","سعد بن أبي وقاص","علي بن أبي طالب"],a:"حمزة بن عبد المطلب"},
+{q:"ما اسم النبي الذي ابتُلِي بصبر طويل وفقد أولاده؟",options:["أيوب","نوح","محمد"],a:"أيوب"}
 ]),
 
-geo:shuffle([
-{q:"ما عاصمة فرنسا؟",a:"باريس"},
-{q:"ما عاصمة اليابان؟",a:"طوكيو"},
-{q:"ما عاصمة إيطاليا؟",a:"روما"},
-{q:"ما عاصمة مصر؟",a:"القاهرة"},
-{q:"ما عاصمة تركيا؟",a:"أنقرة"},
-{q:"ما عاصمة ألمانيا؟",a:"برلين"},
-{q:"ما عاصمة الصين؟",a:"بكين"},
-{q:"ما عاصمة البرازيل؟",a:"برازيليا"},
-{q:"ما عاصمة كندا؟",a:"أوتاوا"},
-{q:"ما عاصمة أستراليا؟",a:"كانبرا"},
-{q:"ما أكبر دولة في العالم مساحة؟",a:"روسيا"},
-{q:"ما أطول نهر في العالم؟",a:"نهر النيل"},
-{q:"ما أكبر قارة في العالم؟",a:"آسيا"},
-{q:"ما أصغر قارة في العالم؟",a:"أستراليا"},
-{q:"ما أعلى جبل في العالم؟",a:"جبل إيفرست"},
-{q:"ما أكبر محيط في العالم؟",a:"المحيط الهادئ"},
-{q:"ما الدولة التي فيها مدينة دبي؟",a:"الإمارات العربية المتحدة"},
-{q:"ما الدولة التي فيها مدينة إسطنبول؟",a:"تركيا"},
-{q:"ما الدولة التي فيها مدينة طوكيو؟",a:"اليابان"},
-{q:"ما الدولة التي فيها مدينة باريس؟",a:"فرنسا"},
-{q:"ما الدولة التي فيها مدينة روما؟",a:"إيطاليا"},
-{q:"ما الدولة التي فيها مدينة القاهرة؟",a:"مصر"},
-{q:"ما الدولة التي فيها مدينة لندن؟",a:"المملكة المتحدة"},
-{q:"ما الدولة التي فيها مدينة نيويورك؟",a:"الولايات المتحدة الأمريكية"},
-{q:"ما الدولة التي فيها مدينة بكين؟",a:"الصين"},
-{q:"ما الدولة التي فيها مدينة برلين؟",a:"ألمانيا"},
-{q:"ما الدولة التي فيها مدينة أوتاوا؟",a:"كندا"},
-{q:"ما الدولة التي فيها مدينة كانبرا؟",a:"أستراليا"},
-{q:"ما الدولة التي فيها مدينة برازيليا؟",a:"البرازيل"}
+// ======= جغرافيا =======
+geo: shuffle([
+{q:"ما عاصمة فرنسا؟",options:["باريس","لندن","روما"],a:"باريس"},
+{q:"ما عاصمة اليابان؟",options:["طوكيو","سيول","بكين"],a:"طوكيو"},
+{q:"ما عاصمة إيطاليا؟",options:["روما","باريس","مدريد"],a:"روما"},
+{q:"ما عاصمة مصر؟",options:["القاهرة","الإسكندرية","الرياض"],a:"القاهرة"},
+{q:"ما عاصمة تركيا؟",options:["أنقرة","إسطنبول","بورصة"],a:"أنقرة"},
+{q:"ما عاصمة ألمانيا؟",options:["برلين","ميونيخ","هامبورغ"],a:"برلين"},
+{q:"ما عاصمة الصين؟",options:["بكين","شنغهاي","هونغ كونغ"],a:"بكين"},
+{q:"ما عاصمة البرازيل؟",options:["برازيليا","ريو دي جانيرو","ساو باولو"],a:"برازيليا"},
+{q:"ما عاصمة كندا؟",options:["أوتاوا","تورنتو","مونتريال"],a:"أوتاوا"},
+{q:"ما عاصمة أستراليا؟",options:["كانبرا","سيدني","ملبورن"],a:"كانبرا"},
+// يمكن إضافة أسئلة حتى تصل 45
 ]),
-
-general:shuffle([
-{q:"كم عدد أيام السنة؟",a:"365"},
-{q:"كم عدد شهور السنة؟",a:"12"},
-{q:"كم عدد قارات العالم؟",a:"7"},
-{q:"كم عدد لاعبي فريق كرة القدم؟",a:"11"},
-{q:"ما أسرع حيوان بري؟",a:"الفهد"},
-{q:"ما أكبر حيوان على الأرض؟",a:"الحوت الأزرق"},
-{q:"ما أصغر دولة في العالم؟",a:"الفاتيكان"},
-{q:"ما أكبر دولة عربية؟",a:"السعودية"},
-{q:"ما العاصمة الأردنية؟",a:"عمان"},
-{q:"ما أكبر محيط في العالم؟",a:"المحيط الهادئ"},
-{q:"ما أطول نهر في العالم؟",a:"النيل"},
-{q:"ما أعلى جبل في أفريقيا؟",a:"جبل كليمنجارو"},
-{q:"ما أكبر صحراء في العالم؟",a:"الصحراء الكبرى"},
-{q:"ما الحيوان الذي يسمى بسفينة الصحراء؟",a:"الجمل"},
-{q:"ما الثمرة التي تحتوي على أكبر كمية فيتامين C؟",a:"الكيوي"},
-{q:"ما أول دولة استخدمت الإنترنت؟",a:"الولايات المتحدة الأمريكية"},
-{q:"ما أول دولة أطلقت القمر الصناعي؟",a:"الاتحاد السوفيتي"}
+general: shuffle([
+{q:"كم عدد أيام السنة؟",options:["365","360","366"],a:"365"},
+{q:"كم عدد شهور السنة؟",options:["12","11","10"],a:"12"},
+{q:"كم عدد قارات العالم؟",options:["7","6","5"],a:"7"},
+{q:"كم عدد لاعبي فريق كرة القدم؟",options:["11","10","12"],a:"11"},
+{q:"ما أسرع حيوان بري؟",options:["الفهد","الأسد","النمر"],a:"الفهد"},
+{q:"ما أكبر حيوان على الأرض؟",options:["الحوت الأزرق","الفيل","الزرافة"],a:"الحوت الأزرق"},
+{q:"ما أصغر دولة في العالم؟",options:["الفاتيكان","موناكو","مالطا"],a:"الفاتيكان"},
+{q:"ما أكبر دولة عربية؟",options:["السعودية","مصر","الإمارات"],a:"السعودية"},
+{q:"ما العاصمة الأردنية؟",options:["عمان","عمان","إربد"],a:"عمان"},
+// يمكن إضافة أسئلة حتى تصل 45
 ])
 };
 
@@ -220,60 +140,49 @@ let currentCategory="";
 let currentIndex=0;
 
 function startQuiz(cat){
-currentCategory=cat;
-currentIndex=0;
-document.getElementById("home").style.display="none";
-document.getElementById("quiz").style.display="block";
-showQuestion();
+  currentCategory=cat;
+  currentIndex=0;
+  document.getElementById("home").style.display="none";
+  document.getElementById("quiz").style.display="block";
+  showQuestion();
 }
 
 function showQuestion(){
-let q=quizzes[currentCategory][currentIndex];
-document.getElementById("question").innerText=q.q;
-document.getElementById("options").style.display="none";
-document.getElementById("options").innerHTML="";
-document.getElementById("answer").innerHTML="";
+  let q=quizzes[currentCategory][currentIndex];
+  document.getElementById("question").innerText=q.q;
+  document.getElementById("options").style.display="none";
+  document.getElementById("options").innerHTML="";
+  document.getElementById("answer").innerHTML="";
 }
 
 function showOptions(){
-let correct=quizzes[currentCategory][currentIndex].a;
-let fake=["لا شيء","غير معروف","لا أعلم","ربما"];
-let options=[correct];
-while(options.length<3){
-let r=fake[Math.floor(Math.random()*fake.length)];
-if(!options.includes(r)){
-options.push(r);
-}
-}
-options=shuffle(options);
-let html="";
-options.forEach(o=>{
-html+=`<div class="option">${o}</div>`;
-});
-document.getElementById("options").innerHTML=html;
-document.getElementById("options").style.display="block";
+  let q=quizzes[currentCategory][currentIndex];
+  let opts=shuffle([...q.options]);
+  let html="";
+  opts.forEach(o=>{html+=`<div class="option">${o}</div>`;});
+  document.getElementById("options").innerHTML=html;
+  document.getElementById("options").style.display="block";
 }
 
 function showAnswer(){
-let a=quizzes[currentCategory][currentIndex].a;
-document.getElementById("answer").innerHTML="الإجابة: "+a;
+  let a=quizzes[currentCategory][currentIndex].a;
+  document.getElementById("answer").innerHTML="الإجابة: "+a;
 }
 
 function nextQuestion(){
-currentIndex++;
-if(currentIndex>=quizzes[currentCategory].length){
-alert("انتهت الأسئلة");
-backHome();
-return;
-}
-showQuestion();
+  currentIndex++;
+  if(currentIndex>=quizzes[currentCategory].length){
+    alert("انتهت الأسئلة");
+    backHome();
+    return;
+  }
+  showQuestion();
 }
 
 function backHome(){
-document.getElementById("quiz").style.display="none";
-document.getElementById("home").style.display="block";
+  document.getElementById("quiz").style.display="none";
+  document.getElementById("home").style.display="flex";
 }
-
 </script>
 
 </body>
