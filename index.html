@@ -12,12 +12,11 @@ body { font-family: Arial, sans-serif; direction: rtl; background-color: orange;
   transform: translate(-50%, -50%);
   display: flex;
   justify-content: center;
-  gap: 20px; /* المسافة بين الكاتقوري */
-  flex-wrap: wrap; /* إذا الشاشة صغيرة، ينزلوا لسطر ثاني */
+  gap: 40px;
+  flex-wrap: nowrap;
   text-align: center;
 }
-h1 { font-size: 50px; color:black; margin-bottom: 20px; width:100%; }
-h2 { font-size: 36px; color:black; margin-bottom: 20px; }
+h1 { font-size: 50px; color:black; margin-bottom: 40px; width:100%; }
 .category { padding: 30px 40px; border: 2px solid black; border-radius: 15px; font-size:28px; cursor:pointer; background-color:white; color:black; }
 button { margin-top: 20px; padding: 12px 20px; font-size: 22px; cursor: pointer; background-color: #3498db; color: white; border:none; border-radius: 8px; }
 #quiz { text-align:center; }
@@ -28,10 +27,6 @@ button { margin-top: 20px; padding: 12px 20px; font-size: 22px; cursor: pointer;
 <body>
 
 <div id="home">
-  <div style="width:100%;">
-    <h1>مسابقة أسئلة وإجابات</h1>
-    <div style="font-size:24px; margin-bottom:30px; color:black;">من إعداد sułtan ⚡️</div>
-  </div>
   <div class="category" onclick="startQuiz('religious')">🕌 الأسئلة الدينية</div>
   <div class="category" onclick="startQuiz('geography')">🌍 أسئلة جغرافيا ودول</div>
   <div class="category" onclick="startQuiz('general')">🧠 أسئلة عامة</div>
@@ -94,11 +89,12 @@ religious: shuffle([
 {q:"كم ركعة صلاة المغرب؟", a:"3"},
 {q:"كم ركعة صلاة العشاء؟", a:"4"},
 {q:"ما اسم السورة التي تبدأ بالحمد لله؟", a:"الفاتحة"},
-{q:"ما اسم الصحابي الجليل الملقب بـ ذو النورين؟", a:"عثمان بن عفان"},
+{q:"ما اسم الصحابي الجليل الملقب بـ 'ذو النورين'؟", a:"عثمان بن عفان"},
 {q:"ما اسم الصحابي الجليل الذي كُني بأبي هريرة؟", a:"عبد الرحمن بن صخر"},
 {q:"ما اسم الصحابي الذي قاتل في معركة أحد وأصيب في وجهه؟", a:"حمزة بن عبد المطلب"},
 {q:"ما اسم النبي الذي ابتُلِي بصبر طويل وفقد أولاده؟", a:"أيوب"}
 ]),
+
 geography: shuffle([
 {q:"ما عاصمة فرنسا؟", a:"باريس"},
 {q:"ما عاصمة اليابان؟", a:"طوكيو"},
@@ -130,6 +126,7 @@ geography: shuffle([
 {q:"ما الدولة التي فيها مدينة كانبرا؟", a:"أستراليا"},
 {q:"ما الدولة التي فيها مدينة برازيليا؟", a:"البرازيل"}
 ]),
+
 general: shuffle([
 {q:"كم عدد أيام السنة؟", a:"365"},
 {q:"كم عدد شهور السنة؟", a:"12"},
