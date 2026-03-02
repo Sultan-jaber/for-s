@@ -2,106 +2,45 @@
 <html lang="ar">
 <head>
 <meta charset="UTF-8">
-<title>مسابقة رمضان 130 سؤال</title>
+<title>مسابقة أسئلة وإجابات</title>
 <style>
-body {
-  font-family: Arial, sans-serif;
-  direction: rtl;
-  margin: 0;
-  padding: 0;
-  background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKFQguiAWmhSW6bUh_xorcIqTKddY_ntpEvUpgXEh8kd7mpCJBE97FOPM&s=10');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  color: #fff;
-}
-#home {
-  position: absolute;
-  top:50%;
-  left:50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-}
-h1 {
-  font-size: 36px;
-  margin-bottom: 30px;
-  text-shadow: 1px 1px 2px #000;
-}
-.category {
-  display: inline-block;
-  margin: 20px;
-  padding: 30px 40px;
-  border-radius: 12px;
-  font-size: 24px;
-  cursor: pointer;
-  background-color: rgba(255, 255, 255, 0.7);
-  color: #000;
-  transition: 0.3s;
-}
-.category:hover {
-  background-color: rgba(255, 255, 255, 0.9);
-}
-button {
-  margin-top: 20px;
-  padding: 12px 20px;
-  font-size: 20px;
-  cursor: pointer;
-  background-color: #2196f3;
-  color: white;
-  border: none;
-  border-radius: 8px;
-}
-#quiz {
-  display: none;
-  background-color: orange;
-  min-height: 100vh;
-  text-align: center;
-  position: relative;
-  background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpsm5b3e1FOglxHqE6ru_-SsBzA2VS-mup2TM7exMOkA&s=10'), url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpsm5b3e1FOglxHqE6ru_-SsBzA2VS-mup2TM7exMOkA&s=10');
-  background-position: left center, right center;
-  background-repeat: no-repeat, no-repeat;
-  background-size: 150px auto, 150px auto;
-  color: #fff;
-}
-#categoryTitle {
-  margin-top: 30px;
-  font-size: 32px;
-  text-align: center;
-}
-#question, .answer {
-  font-size: 28px;
-  margin-top: 30px;
-  text-align: center;
-}
-.answer {
-  display: none;
-  color: #ffeb3b;
-}
+body { font-family: Arial, sans-serif; direction: rtl; background-color: orange; color: white; text-align: center; margin:0; padding:0; }
+#home { position: absolute; top:50%; left:50%; transform: translate(-50%, -50%); }
+h1 { font-size: 36px; margin-bottom: 10px; }
+h2 { font-size: 28px; margin-bottom: 10px; }
+.category { display: inline-block; margin: 20px; padding: 30px 40px; border: 2px solid white; border-radius: 15px; font-size:24px; cursor:pointer; }
+button { margin-top: 20px; padding: 12px 20px; font-size: 18px; cursor: pointer; background-color: #3498db; color: white; border:none; border-radius: 8px; }
+.answer { display:none; margin-top:15px; color: yellow; font-size:20px; }
+#question { font-size:24px; margin-top:30px; }
 </style>
 </head>
 <body>
 
 <div id="home">
-  <h1>مسابقة رمضان 130 سؤال</h1>
-  <div class="category" onclick="startQuiz('religious')">🕌 الأسئلة الدينية</div>
-  <div class="category" onclick="startQuiz('geography')">🌍 أسئلة جغرافيا ودول</div>
-  <div class="category" onclick="startQuiz('general')">🧠 أسئلة عامة</div>
+<h1>مسابقة أسئلة وإجابات</h1>
+<div>من إعداد sułtan ⚡️</div>
+<div class="category" onclick="startQuiz('religious')">🕌 الأسئلة الدينية</div>
+<div class="category" onclick="startQuiz('geography')">🌍 أسئلة جغرافيا ودول</div>
+<div class="category" onclick="startQuiz('general')">🧠 أسئلة عامة</div>
 </div>
 
-<div id="quiz">
-  <h2 id="categoryTitle"></h2>
-  <button id="showQuestionBtn" onclick="showQuestionFunc()">أظهر السؤال</button>
-  <div id="question"></div>
-  <button id="showAnswerBtn" onclick="revealAnswer()">أظهر الإجابة</button>
-  <div class="answer" id="answer"></div>
-  <button id="nextBtn" onclick="nextQuestion()">السؤال التالي</button>
-  <br><br>
-  <button onclick="backToCategories()">العودة للكاتقوري</button>
+<div id="quiz" style="display:none;">
+<h2 id="categoryTitle"></h2>
+<button id="showQuestionBtn" onclick="showQuestionFunc()">أظهر السؤال</button>
+<div id="question"></div>
+<button id="showAnswerBtn" onclick="revealAnswer()">أظهر الإجابة</button>
+<div class="answer" id="answer"></div>
+<button id="nextBtn" onclick="nextQuestion()">السؤال التالي</button>
+<br><br>
+<button onclick="backToCategories()">العودة للكاتقوري</button>
 </div>
 
 <script>
+// الأسئلة كاملة (تم ترتيبها عشوائياً)
+function shuffle(array){ for(let i=array.length-1;i>0;i--){ let j=Math.floor(Math.random()*(i+1)); [array[i],array[j]]=[array[j],array[i]];} return array; }
+
 const quizzes = {
-religious:[
+religious: shuffle([
 {q:"كم عدد أركان الإسلام؟", a:"5"},
 {q:"كم عدد أركان الإيمان؟", a:"6"},
 {q:"من هو أول نبي؟", a:"آدم"},
@@ -143,12 +82,12 @@ religious:[
 {q:"كم ركعة صلاة المغرب؟", a:"3"},
 {q:"كم ركعة صلاة العشاء؟", a:"4"},
 {q:"ما اسم السورة التي تبدأ بالحمد لله؟", a:"الفاتحة"},
-{q:"ما اسم الصحابي الجليل الملقب بـ “ذو النورين”؟", a:"عثمان بن عفان"},
+{q:"ما اسم الصحابي الجليل الملقب بـ ذو النورين؟", a:"عثمان بن عفان"},
 {q:"ما اسم الصحابي الجليل الذي كُني بأبي هريرة؟", a:"عبد الرحمن بن صخر"},
 {q:"ما اسم الصحابي الذي قاتل في معركة أحد وأصيب في وجهه؟", a:"حمزة بن عبد المطلب"},
 {q:"ما اسم النبي الذي ابتُلِي بصبر طويل وفقد أولاده؟", a:"أيوب"}
-],
-geography:[
+]),
+geography: shuffle([
 {q:"ما عاصمة فرنسا؟", a:"باريس"},
 {q:"ما عاصمة اليابان؟", a:"طوكيو"},
 {q:"ما عاصمة إيطاليا؟", a:"روما"},
@@ -164,15 +103,9 @@ geography:[
 {q:"ما أكبر قارة في العالم؟", a:"آسيا"},
 {q:"ما أصغر قارة في العالم؟", a:"أستراليا"},
 {q:"ما أعلى جبل في العالم؟", a:"جبل إيفرست"},
-{q:"ما أكبر محيط في العالم؟", a:"المحيط الهادئ"},
-{q:"ما الدولة التي فيها مدينة دبي؟", a:"الإمارات العربية المتحدة"},
-{q:"ما الدولة التي فيها مدينة إسطنبول؟", a:"تركيا"},
-{q:"ما الدولة التي فيها مدينة طوكيو؟", a:"اليابان"},
-{q:"ما الدولة التي فيها مدينة باريس؟", a:"فرنسا"},
-{q:"ما الدولة التي فيها مدينة روما؟", a:"إيطاليا"},
-{q:"ما الدولة التي فيها مدينة القاهرة؟", a:"مصر"}
-],
-general:[
+{q:"ما أكبر محيط في العالم؟", a:"المحيط الهادئ"}
+]),
+general: shuffle([
 {q:"كم عدد أيام السنة؟", a:"365"},
 {q:"كم عدد شهور السنة؟", a:"12"},
 {q:"كم عدد قارات العالم؟", a:"7"},
@@ -181,12 +114,9 @@ general:[
 {q:"ما أكبر حيوان على الأرض؟", a:"الحوت الأزرق"},
 {q:"ما أصغر دولة في العالم؟", a:"الفاتيكان"},
 {q:"ما أكبر دولة عربية؟", a:"السعودية"},
-{q:"ما العاصمة الأردنية؟", a:"عمان"},
-{q:"ما أعلى جبل في السعودية؟", a:"جبال فيفاء"}
-]
+{q:"ما العاصمة الأردنية؟", a:"عمان"}
+])
 };
-
-for(let cat in quizzes){ quizzes[cat] = quizzes[cat].sort(()=> Math.random() - 0.5); }
 
 let currentCategory = '';
 let currentIndex = 0;
