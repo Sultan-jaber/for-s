@@ -7,7 +7,6 @@
 body {
   font-family: Arial, sans-serif;
   direction: rtl;
-  text-align: center;
   margin: 0;
   padding: 0;
   background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKFQguiAWmhSW6bUh_xorcIqTKddY_ntpEvUpgXEh8kd7mpCJBE97FOPM&s=10');
@@ -21,6 +20,7 @@ body {
   top:50%;
   left:50%;
   transform: translate(-50%, -50%);
+  text-align: center;
 }
 h1 {
   font-size: 36px;
@@ -44,7 +44,7 @@ h1 {
 button {
   margin-top: 20px;
   padding: 12px 20px;
-  font-size: 18px;
+  font-size: 20px;
   cursor: pointer;
   background-color: #2196f3;
   color: white;
@@ -53,16 +53,25 @@ button {
 }
 #quiz {
   display: none;
+  background-color: orange;
+  min-height: 100vh;
+  text-align: center;
+  position: relative;
+  background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpsm5b3e1FOglxHqE6ru_-SsBzA2VS-mup2TM7exMOkA&s=10'), url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpsm5b3e1FOglxHqE6ru_-SsBzA2VS-mup2TM7exMOkA&s=10');
+  background-position: left center, right center;
+  background-repeat: no-repeat, no-repeat;
+  background-size: 150px auto, 150px auto;
+  color: #fff;
 }
 #categoryTitle {
   margin-top: 30px;
-  font-size: 28px;
-  text-shadow: 1px 1px 2px #000;
+  font-size: 32px;
+  text-align: center;
 }
 #question, .answer {
-  font-size: 24px;
+  font-size: 28px;
   margin-top: 30px;
-  text-shadow: 1px 1px 2px #000;
+  text-align: center;
 }
 .answer {
   display: none;
@@ -161,27 +170,7 @@ geography:[
 {q:"ما الدولة التي فيها مدينة طوكيو؟", a:"اليابان"},
 {q:"ما الدولة التي فيها مدينة باريس؟", a:"فرنسا"},
 {q:"ما الدولة التي فيها مدينة روما؟", a:"إيطاليا"},
-{q:"ما الدولة التي فيها مدينة القاهرة؟", a:"مصر"},
-{q:"ما الدولة التي فيها جبل كليمنجارو؟", a:"تنزانيا"},
-{q:"ما الدولة التي فيها الأهرامات؟", a:"مصر"},
-{q:"ما الدولة التي فيها تاج محل؟", a:"الهند"},
-{q:"ما الدولة التي فيها سور الصين العظيم؟", a:"الصين"},
-{q:"ما الدولة التي فيها جبل فوجي؟", a:"اليابان"},
-{q:"ما الدولة التي فيها صحراء جوبي؟", a:"منغوليا/الصين"},
-{q:"ما الدولة التي فيها مدينة برشلونة؟", a:"إسبانيا"},
-{q:"ما الدولة التي فيها مدينة أثينا؟", a:"اليونان"},
-{q:"ما الدولة التي فيها نهر الراين؟", a:"ألمانيا/هولندا"},
-{q:"ما الدولة التي فيها بحيرة فيكتوريا؟", a:"أوغندا/كينيا/تنزانيا"},
-{q:"ما الدولة التي فيها مدينة سيدني؟", a:"أستراليا"},
-{q:"ما الدولة التي فيها مدينة موسكو؟", a:"روسيا"},
-{q:"ما الدولة التي فيها نهر الدانوب؟", a:"ألمانيا/النمسا/المجر"},
-{q:"ما الدولة التي فيها مدينة بوينس آيرس؟", a:"الأرجنتين"},
-{q:"ما الدولة التي فيها صحراء أتاكاما؟", a:"تشيلي"},
-{q:"ما الدولة التي فيها نهر الأمازون؟", a:"البرازيل"},
-{q:"ما الدولة التي فيها بحيرة بايكال؟", a:"روسيا"},
-{q:"ما الدولة التي فيها جبل ماكينلي؟", a:"الولايات المتحدة الأمريكية (ألاسكا)"},
-{q:"ما الدولة التي فيها نهر السند؟", a:"باكستان"},
-{q:"ما الدولة التي فيها البحر الميت؟", a:"الأردن/فلسطين"}
+{q:"ما الدولة التي فيها مدينة القاهرة؟", a:"مصر"}
 ],
 general:[
 {q:"كم عدد أيام السنة؟", a:"365"},
@@ -193,17 +182,7 @@ general:[
 {q:"ما أصغر دولة في العالم؟", a:"الفاتيكان"},
 {q:"ما أكبر دولة عربية؟", a:"السعودية"},
 {q:"ما العاصمة الأردنية؟", a:"عمان"},
-{q:"ما أعلى جبل في السعودية؟", a:"جبال فيفاء"},
-{q:"ما الدولة التي تعرف باسم بلاد الفراعنة؟", a:"مصر"},
-{q:"ما لون علم اليابان؟", a:"أبيض وأحمر"},
-{q:"ما لون علم ألمانيا؟", a:"أسود وأحمر وأصفر"},
-{q:"ما أطول نهر في السعودية؟", a:"وادي الرمة"},
-{q:"كم عدد اللاعبين في كرة السلة؟", a:"5"},
-{q:"ما اسم أسرع طائرة في العالم؟", a:"SR-71 Blackbird"},
-{q:"ما اسم أكبر بحيرة مالحة في العالم؟", a:"بحيرة الميت"},
-{q:"ما اسم أطول جسر في العالم؟", a:"جسر دانيانغ-كونشان الكبير"},
-{q:"ما هي العملة اليابانية؟", a:"ين"},
-{q:"ما هي العملة الأمريكية؟", a:"دولار"}
+{q:"ما أعلى جبل في السعودية؟", a:"جبال فيفاء"}
 ]
 };
 
