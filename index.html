@@ -51,7 +51,11 @@ button { margin-top: 20px; padding: 14px 24px; font-size: 26px; cursor: pointer;
 
 <div id="quiz">
 <h2 id="categoryTitle"></h2>
-<button id="showQuestionBtn" onclick="showQuestionFunc()">أظهر السؤال</button>
+<div style="display:flex; gap:20px;">
+  <button id="showQuestionBtn" onclick="showQuestionFunc()">أظهر السؤال</button>
+  <button id="showOptionsBtn" onclick="showOptionsFunc()">عرض 3 اختيارات</button>
+  <button id="showAnswerBtn" onclick="showAnswerFunc()">أظهر الإجابة</button>
+</div>
 <div id="question"></div>
 <div class="options" id="options"></div>
 <button id="nextBtn" onclick="nextQuestion()">السؤال التالي</button>
@@ -68,7 +72,7 @@ function shuffle(array){
   return array; 
 }
 
-// كل الأسئلة جاهزة
+// كل الأسئلة الحقيقية كاملة
 const quizzes = {
 religious: shuffle([
 {q:"كم عدد أركان الإسلام؟", a:"5"},
@@ -180,7 +184,6 @@ function startQuiz(category){
   document.getElementById('home').style.display='none';
   document.getElementById('quiz').style.display='flex';
   document.getElementById('categoryTitle').textContent = category==='religious'?"🕌 الأسئلة الدينية":category==='geography'?"🌍 أسئلة جغرافيا ودول":"🧠 أسئلة عامة";
-  document.getElementById('showQuestionBtn').style.display='inline-block';
   document.getElementById('question').style.display='none';
   document.getElementById('options').style.display='none';
   document.getElementById('nextBtn').style.display='none';
@@ -190,8 +193,12 @@ function showQuestionFunc(){
   const currentQ = quizzes[currentCategory][currentIndex];
   document.getElementById('question').textContent = currentQ.q;
   document.getElementById('question').style.display='block';
-  
-  // عمل 3 خيارات
+  document.getElementById('options').style.display='none';
+  document.getElementById('nextBtn').style.display='none';
+}
+
+function showOptionsFunc(){
+  const currentQ = quizzes[currentCategory][currentIndex];
   let options = [currentQ.a];
   while(options.length<3){
     let pool = quizzes[currentCategory].map(x=>x.a);
@@ -210,9 +217,12 @@ function showQuestionFunc(){
     optionsDiv.appendChild(btn);
   });
   optionsDiv.style.display='flex';
-  
-  document.getElementById('showQuestionBtn').style.display='none';
-  document.getElementById('nextBtn').style.display='none';
+}
+
+function showAnswerFunc(){
+  const currentQ = quizzes[currentCategory][currentIndex];
+  alert("الإجابة الصحيحة: " + currentQ.a);
+  document.getElementById('nextBtn').style.display='inline-block';
 }
 
 function checkAnswer(selected, correct){
