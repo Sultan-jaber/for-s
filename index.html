@@ -7,35 +7,36 @@
 body {
   font-family: Arial, sans-serif;
   direction: rtl;
-  background-color: #fff176;
   text-align: center;
-  margin: 0; padding:0;
-  background-image: url('https://i.ibb.co/4f9k5gh/ramadan-lantern.png');
+  margin: 0;
+  padding: 0;
+  background-image: url('https://i.pinimg.com/736x/7v/JN/0L/7vJN0LJkI.jpg');
+  background-size: cover;
+  background-position: center;
   background-repeat: no-repeat;
-  background-position: top center;
-  background-size: 150px auto;
+  color: #333;
 }
 #home { position: absolute; top:50%; left:50%; transform: translate(-50%, -50%); }
-h1 { font-size: 36px; margin-bottom: 10px; }
-h2 { font-size: 28px; margin-bottom: 10px; }
-.category { display: inline-block; margin: 20px; padding: 30px 40px; border: 2px solid #ff6f00; border-radius: 15px; font-size:24px; cursor:pointer; background-color: #ffca28; transition:0.3s; }
-.category:hover { background-color: #ffc107; }
+h1 { font-size: 36px; margin-bottom: 30px; color: #fff; text-shadow: 1px 1px 2px #000; }
+.category { display: inline-block; margin: 20px; padding: 30px 40px; border-radius: 15px; font-size:24px; cursor:pointer; background-color: rgba(255, 255, 255, 0.7); transition:0.3s; }
+.category:hover { background-color: rgba(255, 255, 255, 0.9); }
 button { margin-top: 20px; padding: 12px 20px; font-size: 18px; cursor: pointer; background-color: #2196f3; color: white; border:none; border-radius: 8px; }
-.answer { display:none; margin-top:15px; color: #d32f2f; font-size:20px; }
-#question { font-size:24px; margin-top:30px; }
+#quiz { display:none; }
+#question, .answer { font-size:24px; margin-top:30px; color:#fff; text-shadow: 1px 1px 2px #000; }
+.answer { display:none; color:#ffeb3b; }
+#showQuestionBtn, #showAnswerBtn, #nextBtn { display:inline-block; }
 </style>
 </head>
 <body>
 
 <div id="home">
 <h1>مسابقة رمضان 130 سؤال</h1>
-<div>من إعداد sułtan ⚡️</div>
 <div class="category" onclick="startQuiz('religious')">🕌 الأسئلة الدينية</div>
 <div class="category" onclick="startQuiz('geography')">🌍 أسئلة جغرافيا ودول</div>
 <div class="category" onclick="startQuiz('general')">🧠 أسئلة عامة</div>
 </div>
 
-<div id="quiz" style="display:none;">
+<div id="quiz">
 <h2 id="categoryTitle"></h2>
 <button id="showQuestionBtn" onclick="showQuestionFunc()">أظهر السؤال</button>
 <div id="question"></div>
@@ -47,7 +48,7 @@ button { margin-top: 20px; padding: 12px 20px; font-size: 18px; cursor: pointer;
 </div>
 
 <script>
-// الأسئلة كاملة
+// الأسئلة كاملة (130 سؤال)
 const quizzes = {
 religious:[
 {q:"كم عدد أركان الإسلام؟", a:"5"},
@@ -119,17 +120,15 @@ geography:[
 {q:"ما الدولة التي فيها مدينة باريس؟", a:"فرنسا"},
 {q:"ما الدولة التي فيها مدينة روما؟", a:"إيطاليا"},
 {q:"ما الدولة التي فيها مدينة القاهرة؟", a:"مصر"},
-{q:"ما الدولة التي فيها مدينة لندن؟", a:"المملكة المتحدة"},
-{q:"ما الدولة التي فيها مدينة نيويورك؟", a:"الولايات المتحدة الأمريكية"},
 {q:"ما الدولة التي فيها جبل كليمنجارو؟", a:"تنزانيا"},
 {q:"ما الدولة التي فيها الأهرامات؟", a:"مصر"},
 {q:"ما الدولة التي فيها تاج محل؟", a:"الهند"},
 {q:"ما الدولة التي فيها سور الصين العظيم؟", a:"الصين"},
 {q:"ما الدولة التي فيها جبل فوجي؟", a:"اليابان"},
-{q:"ما الدولة التي فيها صحراء جوبي؟", a:"منغوليا والصين"},
+{q:"ما الدولة التي فيها صحراء جوبي؟", a:"منغوليا/الصين"},
 {q:"ما الدولة التي فيها مدينة برشلونة؟", a:"إسبانيا"},
 {q:"ما الدولة التي فيها مدينة أثينا؟", a:"اليونان"},
-{q:"ما الدولة التي فيها نهر الراين؟", a:"ألمانيا"},
+{q:"ما الدولة التي فيها نهر الراين؟", a:"ألمانيا/هولندا"},
 {q:"ما الدولة التي فيها بحيرة فيكتوريا؟", a:"أوغندا/كينيا/تنزانيا"},
 {q:"ما الدولة التي فيها مدينة سيدني؟", a:"أستراليا"},
 {q:"ما الدولة التي فيها مدينة موسكو؟", a:"روسيا"},
@@ -140,7 +139,7 @@ geography:[
 {q:"ما الدولة التي فيها بحيرة بايكال؟", a:"روسيا"},
 {q:"ما الدولة التي فيها جبل ماكينلي؟", a:"الولايات المتحدة الأمريكية (ألاسكا)"},
 {q:"ما الدولة التي فيها نهر السند؟", a:"باكستان"},
-{q:"ما الدولة التي فيها البحر الميت؟", a:"الأردن وفلسطين"}
+{q:"ما الدولة التي فيها البحر الميت؟", a:"الأردن/فلسطين"}
 ],
 general:[
 {q:"كم عدد أيام السنة؟", a:"365"},
